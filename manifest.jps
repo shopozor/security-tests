@@ -19,7 +19,7 @@ application:
       - name: gitRepo
         caption: Url
         type: string
-        default: https://bitbucket.org/softozor/jenkins-ci-test
+        default: https://github.com/softozor/jenkins-ci-test
         required: true
         regex: "^https?:\\/\\/.+$"
         regexText: Incorrect URL. HTTPS link to Git repository is required.
