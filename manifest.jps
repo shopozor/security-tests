@@ -1,0 +1,86 @@
+jpsVersion: 1.3
+jpsType: install
+application:
+  id: jenkins-ci-test
+  name: Jenkins CI Test
+  version: 0.0
+  baseUrl: https://raw.githubusercontent.com/softozor/jenkins-ci-test/master
+
+  globals:
+    NODEJS_HOME: /home/jelastic
+    NODEJS_CONTEXT: ROOT
+    NODEJS_PATH_TO_CONTEXT: ${globals.NODEJS_HOME}/${globals.NODEJS_CONTEXT}
+    NODEJS_PORT: 3000
+
+  settings:
+    fields:
+      - type: spacer
+        caption: Git repository
+      - name: gitRepo
+        caption: Url
+        type: string
+        default: https://bitbucket.org/softozor/jenkins-ci-test
+        required: true
+        regex: "^https?:\\/\\/.+$"
+        regexText: Incorrect URL. HTTPS link to Git repository is required.
+      - name: gitBranch
+        caption: Branch
+        type: string
+        default: master
+        required: true
+      - name: gitUser
+        caption: User
+        type: string
+        required: true
+      - name: gitPassword
+        caption: Password
+        type: string
+        inputType: password
+        required: true
+
+  env:
+    topology:
+      nodes:
+        - nodeGroup: bl
+          nodeType: nginx-dockerized
+          displayName: Node balancing
+          count: 1
+          fixedCloudlets: 1
+          cloudlets: 4
+          env:
+            DOCKER_EXPOSED_PORT: 22,80,443,${globals.NODEJS_PORT}
+        - nodeGroup: cp
+          nodeType: nodejs
+          displayName: Application servers
+          count: 1
+          fixedCloudlets: 1
+          cloudlets: 4
+          env:
+            PACKAGE_MANAGER: npm
+            PORT: ${globals.NODEJS_PORT}
+
+  onInstall:
+    - deployRepo
+    - startApp
+
+  actions:
+    deployRepo:
+      api:
+        - method: environment.vcs.CreateProject
+          params:
+            type: git
+            context: ${globals.NODEJS_CONTEXT}
+            url: ${settings.gitRepo}
+            branch: ${settings.gitBranch}
+            login: ${settings.gitUser}
+            password: ${settings.gitPassword}
+        - method: environment.vcs.Update
+          params:
+            context: ${globals.NODEJS_CONTEXT}
+      nodeGroup: cp
+    startApp:
+      - cmd [cp]:
+          - cd ${globals.NODEJS_PATH_TO_CONTEXT}
+          - npm i
+      - restartNodes:
+          - nodeGroup: cp
