@@ -42,3 +42,4 @@ In your github's repository, add a webhook:
 ![Add webhook to github respository](doc/img/github-repo-webhook.png)
 
 In that interface, choose option "Let me select individual events." and select "Pull requests".
+
