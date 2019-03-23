@@ -1,6 +1,6 @@
 # Automatic test runs with Jenkins on Jelastic
 
-We need to have jenkins deploy our code to our Jelastic environments and run the (unit, acceptance, and end-to-end) tests. To do that, we need to configure a pipeline. Let's start easy with a "Hello World!" example.
+We need to have jenkins deploy our code to our Jelastic environments and run the (unit, acceptance, and end-to-end) tests. To do that, we need to configure a pipeline. Let's start easy with a "Hello World!" example with a github repository. For the examples using github webhooks to work, we've had to deactivate the 2-factor authentication.
 
 ## Jenkins setup on Jelastic
 
@@ -26,3 +26,19 @@ In the `Pipeline` section,
 ## Automatic minimalistic pipeline
 
 The pipeline is the same as before. The only difference is that it is automatically run everytime there is a merged pull request on the `master` branch.
+
+In Jenkins' plugin manager,
+
+* Switch to "Available" tab
+* Filter for "pull"
+* Install "GitHub Pull Request Builder"
+
+Following [this advice](https://devopscube.com/jenkins-build-trigger-github-pull-request/), go to "Manage Jenkins --> Configure System" and look for "Github Pull Request Builder". There you can enter your credentials:
+
+![Github Pull Request Builder configuration in Jenkins](doc/img/github-pull-request-builder-jenkins.png)
+
+In your github's repository, add a webhook:
+
+![Add webhook to github respository](doc/img/github-repo-webhook.png)
+
+In that interface, choose option "Let me select individual events." and select "Pull requests".
