@@ -52,10 +52,10 @@ That automatically adds the `https://softozor-jenkins.hidora.com/ghprbhook` hook
 
 ![Automatic github webhook configuration](doc/img/github-automatic-webhook-configuration.png)
 
-![Github Pull Request Builder webhook](github-repo-webhook.png)
+![Github Pull Request Builder webhook](doc/img/github-repo-webhook.png)
 
 There is no need to enable github's webhooks in Jenkins and add `https://softozor-jenkins.hidora.com/github-webhook/` to the github repository's webhooks.  
 
 In the new pipeline's configuration, make sure to use github hooks for build triggering:
 
-![Use github hooks for build triggering](use-github-hooks-for-build-triggering.png)
+![Use github hooks for build triggering](doc/img/use-github-hooks-for-build-triggering.png)
