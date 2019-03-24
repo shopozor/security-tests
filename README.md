@@ -6,8 +6,14 @@ We need to have jenkins deploy our code to our Jelastic environments and run the
 
 1. Install Jenkins from the marketplace
 2. Upon Jenkins startup, give the password that is found under `jenkins_home/secrets/initialAdminPassword`
+
+![initial admin password](initial-admin-password.png)
+
 2.1 Anytime later when you want to log in, you need that password as well as the username `admin`
-3. Upon Jenkins startup, install the default packages
+2.2 Of course you can add a user with your preferred password to Jenkins
+3. Upon Jenkins startup, install the suggested plugins
+
+![install suggested plugins](install-suggested-plugins.png)
 
 ## Minimalistic pipeline
 
@@ -37,9 +43,18 @@ Following [this advice](https://devopscube.com/jenkins-build-trigger-github-pull
 
 ![Github Pull Request Builder configuration in Jenkins](doc/img/github-pull-request-builder-jenkins.png)
 
-In your github's repository, add a webhook:
+Make sure the checkbox "Auto-manage webhooks" in the configuration of Github Pull Request Builder is checked:
 
-![Add webhook to github respository](doc/img/github-repo-webhook.png)
+![Auto-manage webhooks](doc/img/auto-manage-webhooks.png)
 
-In that interface, choose option "Let me select individual events." and select "Pull requests".
+That automatically adds the `https://softozor-jenkins.hidora.com/ghprbhook` hook to the github repository:
 
+![Automatic github webhook configuration](doc/img/github-automatic-webhook-configuration.png)
+
+![Github Pull Request Builder webhook](github-repo-webhook.png)
+
+There is no need to enable github's webhooks in Jenkins and add `https://softozor-jenkins.hidora.com/github-webhook/` to the github repository's webhooks.  
+
+In the new pipeline's configuration, make sure to use github hooks for build triggering:
+
+![Use github hooks for build triggering](use-github-hooks-for-build-triggering.png)
