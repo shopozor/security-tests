@@ -9,8 +9,9 @@ We need to have jenkins deploy our code to our Jelastic environments and run the
 
 ![initial admin password](doc/img/initial-admin-password.png)
 
-2.1 Anytime later when you want to log in, you need that password as well as the username `admin`
-2.2 Of course you can add a user with your preferred password to Jenkins
+* Anytime later when you want to log in, you need that password as well as the username `admin`
+* Of course you can add a user with your preferred password to Jenkins
+
 3. Upon Jenkins startup, install the suggested plugins
 
 ![install suggested plugins](doc/img/install-suggested-plugins.png)
