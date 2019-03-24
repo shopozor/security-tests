@@ -7,13 +7,13 @@ We need to have jenkins deploy our code to our Jelastic environments and run the
 1. Install Jenkins from the marketplace
 2. Upon Jenkins startup, give the password that is found under `jenkins_home/secrets/initialAdminPassword`
 
-![initial admin password](initial-admin-password.png)
+![initial admin password](doc/img/initial-admin-password.png)
 
 2.1 Anytime later when you want to log in, you need that password as well as the username `admin`
 2.2 Of course you can add a user with your preferred password to Jenkins
 3. Upon Jenkins startup, install the suggested plugins
 
-![install suggested plugins](install-suggested-plugins.png)
+![install suggested plugins](doc/img/install-suggested-plugins.png)
 
 ## Minimalistic pipeline
 
