@@ -8,7 +8,7 @@ pipeline {
     stage('Test') {
       environment {
         HIDORA_CREDENTIALS = credentials('hidora')
-        ENVIRONMENT_NAME = "jenkins-ci-test"
+        ENVIRONMENT_NAME = "jenkins-test"
       }
       steps {
         sh 'chmod u+x ./deploy-to-jelastic.sh'
