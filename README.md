@@ -59,3 +59,24 @@ There is no need to enable github's webhooks in Jenkins and add `https://softozo
 In the new pipeline's configuration, make sure to use github hooks for build triggering:
 
 ![Use github hooks for build triggering](doc/img/use-github-hooks-for-build-triggering.png)
+
+## Automatic deployment to Jelastic platform
+
+On each Jenkins server node, install docker (cf. [this documentation](https://docs.docker.com/install/linux/docker-ce/debian/)):
+
+```
+apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+apt-key fingerprint 0EBFCD88
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+apt update
+apt install docker-ce docker-ce-cli containerd.io
+service docker start
+usermod -aG docker jenkins
+```
+
+The last line allows jenkins to run docker commands. You verify that docker runs ok with the following command:
+
+```
+docker run hello-world
+```
