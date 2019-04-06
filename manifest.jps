@@ -12,32 +12,6 @@ application:
     NODEJS_PATH_TO_CONTEXT: ${globals.NODEJS_HOME}/${globals.NODEJS_CONTEXT}
     NODEJS_PORT: 3000
 
-  settings:
-    fields:
-      - type: spacer
-        caption: Git repository
-      - name: gitRepo
-        caption: Url
-        type: string
-        default: https://github.com/softozor/jenkins-ci-test
-        required: true
-        regex: "^https?:\\/\\/.+$"
-        regexText: Incorrect URL. HTTPS link to Git repository is required.
-      - name: gitBranch
-        caption: Branch
-        type: string
-        default: master
-        required: true
-      - name: gitUser
-        caption: User
-        type: string
-        required: true
-      - name: gitPassword
-        caption: Password
-        type: string
-        inputType: password
-        required: true
-
   env:
     topology:
       nodes:
@@ -70,10 +44,8 @@ application:
           params:
             type: git
             context: ${globals.NODEJS_CONTEXT}
-            url: ${settings.gitRepo}
-            branch: ${settings.gitBranch}
-            login: ${settings.gitUser}
-            password: ${settings.gitPassword}
+            url: https://github.com/softozor/jenkins-ci-test
+            branch: master
         - method: environment.vcs.Update
           params:
             context: ${globals.NODEJS_CONTEXT}
