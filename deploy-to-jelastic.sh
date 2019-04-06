@@ -2,6 +2,7 @@
 
 if [ $# -ne 3 ] ; then
   echo "Usage: $0 login password envName [deploy_group = cp]"
+  exit 0
 fi
 
 HOSTER_URL="https://app.hidora.com"
@@ -26,6 +27,7 @@ envs=$(curl -k \
 -A "${USER_AGENT}" \
 -X POST \
 -fsS ${HOSTER_URL}/1.0/environment/control/rest/getenvs -d "appid=${APPID}&session=${SESSION}");
+echo "envs = $envs"
 ENVNAMES=$(echo $envs | jq '[.infos[].env.envName]')
 CREATED=$(echo $envs | jq '[.infos[].env.envName]' | jq "index(\"$ENV_NAME\")")
 
