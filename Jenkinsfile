@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Test') {
       environment {
-        HIDORA_CREDENTIALS = credentials('hidora')
+        HIDORA_CREDENTIALS = credentials('hidora-credentials')
         ENVIRONMENT_NAME = "jenkins-test"
       }
       steps {

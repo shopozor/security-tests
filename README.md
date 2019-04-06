@@ -62,6 +62,8 @@ In the new pipeline's configuration, make sure to use github hooks for build tri
 
 ## Automatic deployment to Jelastic platform
 
+### Docker configuration
+
 On each Jenkins server node, install docker (cf. [this documentation](https://docs.docker.com/install/linux/docker-ce/debian/)):
 
 ```
@@ -80,3 +82,8 @@ The last line allows jenkins to run docker commands. You verify that docker runs
 ```
 docker run hello-world
 ```
+
+We might want to write our own JPS manifest making use of Jenkins' official manifest and additionally installing docker. 
+
+### Injecting Jelastic platform credentials
+
