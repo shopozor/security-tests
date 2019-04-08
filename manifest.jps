@@ -46,8 +46,8 @@ application:
             context: ${globals.NODEJS_CONTEXT}
             url: https://github.com/softozor/jenkins-ci-test
             branch: master
-            login: GIT_USER
-            password: GIT_PASSWORD
+            # login: GIT_USER
+            # password: GIT_PASSWORD
         - method: environment.vcs.Update
           params:
             context: ${globals.NODEJS_CONTEXT}
