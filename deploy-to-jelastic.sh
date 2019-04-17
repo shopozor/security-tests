@@ -61,11 +61,20 @@ wasEnvCreated() {
   echo $envExists
 }
 
+getManifestContent() {
+  local pathToManifest=$1
+  if [[ $pathToManifest == http* ]] ; then
+    echo $(curl -fsSL $pathToManifest)
+  else
+    echo $(cat $pathToManifest)
+  fi
+}
+
 installEnv() {
   local session=$1
   local envName=$2
   local pathToManifest=$3
-  local manifest=$(cat $pathToManifest)
+  local manifest=$(getManifestContent $pathToManifest)
   echo "Installing new environment <$envName> from manifest <$pathToManifest>..." >&2
   local installApp=$(curl -k \
   -A "${USER_AGENT}" \
@@ -106,8 +115,9 @@ redeployEnvironment() {
   #   done
   # }
 
-if [ $# -ne 3 ] ; then
-  echo "Usage: $0 login password envName [deploy_group = cp] [path-to-manifest = manifest.jps]"
+if [ $# -lt 3 ] ; then
+  echo "Usage: $0 login password envName [deploy_group = cp] [url-to-manifest = manifest.jps]"
+  echo "If the url-to-manifest starts with http, then it is considered remote. Otherwise it is considered local."
   exit 0
 fi
 
