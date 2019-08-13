@@ -13,6 +13,8 @@ RUN go install -v ./...
 
 RUN go build
 
+# may be needed for the requests package that the scripts use
+RUN sudo pip install requests 
 
 # returns the grade of the website, typically one of: A+, A, B, C, D, E, F
 RUN python securityheaders-grade.py https://www.softozor.ch
