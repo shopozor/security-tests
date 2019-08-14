@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'python:latest'
+    }
+  }
   environment {
     REPORTS_FOLDER = "$WORKSPACE/tests/junit-reports"
     VENV = 'venv'
@@ -8,7 +12,8 @@ pipeline {
     stage('Virtual Environment Installation') {
       steps {
         withEnv(["HOME=$WORKSPACE"]) {
-          sh "virtualenv $VENV"
+          sh "pip install virtualenv --user"
+          sh "$WORKSPACE/.local/bin/virtualenv $VENV"
           sh ". $VENV/bin/activate"
           sh ". $VENV/bin/activate && pip install -r tests/requirements.txt"
         }
