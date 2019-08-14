@@ -1,27 +1,14 @@
-FROM golang:1.9-stretch
+FROM python:3.7-slim
 
-COPY *.go /app
-COPY *.py /app
+RUN apt-get -y update \
+  && apt-get install -y jq dos2unix \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY . /app
 
 WORKDIR /app
 
-ENV ssllabs-scan /app
-
-
-RUN go get -d -v ./...
-RUN go install -v ./...
-
-RUN go build
-
-# may be needed for the requests package that the scripts use
-RUN sudo pip install requests 
-
-# returns the grade of the website, typically one of: A+, A, B, C, D, E, F
-RUN python securityheaders-grade.py https://www.softozor.ch
-
-# returns the grade of the website, typically one of: A+, A, B, C, D, E, F
-RUN python ssllabs-grade.py https://www.softozor.ch
-
-# TODO notification. If one of the two grades above is not A+, we need to be notified.
-
-CMD ["app"]
+RUN pip install -r tests/requirements.txt \
+    && dos2unix ./scripts/* \
+    && chmod u+x ./scripts/*.sh
