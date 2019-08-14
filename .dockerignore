@@ -6,3 +6,8 @@ Dockerfile
 .dockerignore
 .pre-commit-config.yaml
 .vscode
+/ssllabs/
+/tests/backend/
+/tests/Backend.groovy
+/tests/consumer-frontend/
+/tests/management-frontend/
