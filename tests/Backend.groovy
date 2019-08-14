@@ -46,7 +46,7 @@ pipeline {
   post {
     always {
       script {
-         junit "**/*.xml"
+         junit "/app/**/*.xml"
       }
     }
   }
