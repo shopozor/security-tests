@@ -1,5 +1,6 @@
 import pytest
 import requests
+import sh
 
 
 def test_server_header_not_returned(graphql_endpoint, query_me):
@@ -18,3 +19,9 @@ def test_security_headers_need_highest_possible_grade(domain):
     res = requests.get('https://securityheaders.com/?q=' +
                        domain + '&followRedirects=on')
     assert res.headers['X-Grade'] == 'A+'
+
+
+def test_ssllabs_scan_grade_is_highest(graphql_endpoint):
+    cmd = sh.Command('/app/ssllabs-scan')
+    result = cmd('-grade', 'http://www.softozor.ch')
+    # result is --> "http://www.softozor.ch": "A"
