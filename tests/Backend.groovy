@@ -5,7 +5,8 @@ pipeline {
     }
   }
   environment {
-    // REPORTS_FOLDER = "junit-reports"
+    JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
+    JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
     VENV = 'venv'
   }
   stages {
@@ -19,10 +20,18 @@ pipeline {
         }
       }
     }
+    stage('Wake up Jelastic environment') {
+        steps {
+            SCRIPT_TO_RUN = './scripts/wake-up-env.sh'
+            sh "dos2unix ./scripts/helpers.sh"
+            sh "dos2unix $SCRIPT_TO_RUN"
+            sh "$SCRIPT_TO_RUN $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $HIDORA_DOMAIN"
+        }
+    }
     stage('Security Tests') {
         steps {
             withEnv(["HOME=$WORKSPACE"]) {
-                sh ". $VENV/bin/activate && cd tests/backend && pytest --domain $DOMAIN --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
+                sh ". $VENV/bin/activate && cd tests/backend && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
             }
         }
     }
