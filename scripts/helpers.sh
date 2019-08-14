@@ -69,6 +69,8 @@ startEnvIfNecessary() {
 waitUntilEnvIsRunning () {
   local graphqlEndpoint=$1
 
+  echo "Waiting until endpoint <$graphqlEndpoint> is up" >&2
+
   START_TIME=`date +%s`
   while [[ $status -ne 200 ]] ; do
       status=$(curl -H "Content-Type: application/json" \
@@ -80,9 +82,12 @@ waitUntilEnvIsRunning () {
       CURRENT_TIME=`date +%s`
       RUNTIME=$((CURRENT_TIME - START_TIME))
       if [ $RUNTIME -ge $TIME_OUT_IN_SECONDS ] ; then
-        echo "Waking up environment timed out"
+        echo "Waking up environment timed out" >&2
         exit 1
       fi
       sleep $TIMER_DELTA_IN_SECONDS
+      echo "Waited $RUNTIME seconds..." >&2
   done
+  
+  echo "Endpoint <$graphqlEndpoint> up and running" >&2
 }

@@ -12,7 +12,6 @@ APPID=$2
 
 SESSION=$(getSession $3 $4 ${HOSTER_URL})
 ENV_NAME=$5
-CONTEXT="ROOT"
 
 wasEnvCreated() {
   echo "envName = $2" >&2
@@ -28,13 +27,13 @@ wakeUp() {
   ENVS=$(getEnvs $SESSION)
   CREATED=$(wasEnvCreated "$ENVS" "${ENV_NAME}")
 
-  if [ "${CREATED}" == "null" ]; then
-    echo "Environment $envName does not exist!"
-    exit 1
-  else
+  # if [ "${CREATED}" == "null" ]; then
+  #   echo "Environment $envName does not exist!"
+  #   exit 1
+  # else
     startEnvIfNecessary $SESSION "${ENV_NAME}" "$ENVS"
     waitUntilEnvIsRunning $SESSION "${ENV_NAME}"
-  fi
+  # fi
 
   exit 0
 }
