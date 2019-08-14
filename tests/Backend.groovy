@@ -22,7 +22,7 @@ pipeline {
     }
     stage('Wake up Jelastic environment') {
         steps {
-            SCRIPT_TO_RUN = './scripts/wake-up-env.sh'
+            def SCRIPT_TO_RUN = './scripts/wake-up-env.sh'
             sh "dos2unix ./scripts/helpers.sh"
             sh "dos2unix $SCRIPT_TO_RUN"
             sh "$SCRIPT_TO_RUN $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $HIDORA_DOMAIN"
