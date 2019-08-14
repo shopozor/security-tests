@@ -36,17 +36,17 @@ pipeline {
     }
     stage('Security Tests') {
         steps {
-            // withEnv(["HOME=$WORKSPACE"]) {
+            withEnv(["HOME=$WORKSPACE"]) {
                 // sh ". $VENV/bin/activate && cd tests/backend && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
-            // }
-            sh "cd /app/tests/backend && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
+                sh "cd tests/backend && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
+            }
         }
     }
   }
   post {
     always {
       script {
-         junit "/app/**/*.xml"
+         junit "**/*.xml"
       }
     }
   }
