@@ -26,6 +26,7 @@ pipeline {
                 SCRIPT_TO_RUN = './scripts/wake-up-env.sh'
                 sh ". $VENV/bin/activate && python venv/lib/python3.7/site-packages/dos2unix.py ./scripts/helpers.sh ./scripts/helpers.sh"
                 sh ". $VENV/bin/activate && python venv/lib/python3.7/site-packages/dos2unix.py $SCRIPT_TO_RUN $SCRIPT_TO_RUN"
+                sh "chmod u+x $SCRIPT_TO_RUN"
                 sh "$SCRIPT_TO_RUN $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $HIDORA_DOMAIN"
             }
         }
