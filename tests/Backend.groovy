@@ -3,7 +3,7 @@ pipeline {
     docker {
         // TODO: use our own docker image here
     //   image 'python:latest'
-      image 'softozor/shopozor-security-tests:v0.0.2'
+      image 'softozor/shopozor-security-tests:v0.0.3'
     }
   }
   environment {

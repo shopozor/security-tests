@@ -1,0 +1,8 @@
+.*
+**/*.pyc
+**/*.sqlite
+/venv/
+Dockerfile
+.dockerignore
+.pre-commit-config.yaml
+.vscode
