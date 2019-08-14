@@ -5,7 +5,7 @@ pipeline {
     }
   }
   environment {
-    REPORTS_FOLDER = "$WORKSPACE/tests/junit-reports"
+    // REPORTS_FOLDER = "junit-reports"
     VENV = 'venv'
   }
   stages {
@@ -22,7 +22,7 @@ pipeline {
     stage('Security Tests') {
         steps {
             withEnv(["HOME=$WORKSPACE"]) {
-                sh ". $VENV/bin/activate && cd tests/backend && pytest --domain $DOMAIN --graphql-endpoint graphql/ -ra --junitxml=$REPORTS_FOLDER/backend-tests.xml"
+                sh ". $VENV/bin/activate && cd tests/backend && pytest --domain $DOMAIN --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
             }
         }
     }
@@ -30,7 +30,7 @@ pipeline {
   post {
     always {
       script {
-         junit "**/$REPORTS_FOLDER/*.xml"
+         junit "**/*.xml"
       }
     }
   }
