@@ -86,6 +86,7 @@ waitUntilEnvIsRunning () {
         exit 1
       fi
       sleep $TIMER_DELTA_IN_SECONDS
+      echo "Status: $status"
       echo "Waited $RUNTIME seconds..." >&2
   done
   
