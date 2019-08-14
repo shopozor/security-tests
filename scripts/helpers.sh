@@ -72,7 +72,7 @@ waitUntilEnvIsRunning () {
   echo "Waiting until endpoint <$graphqlEndpoint> is up" >&2
 
   START_TIME=`date +%s`
-  while [[ $status -ne 200 ]] ; do
+  while [[ $status -ne 200 ]] && [[ $status -ne 403 ]] ; do
       status=$(curl -H "Content-Type: application/json" \
           -w "%{http_code}" \
           -d '{ "query": "query { me { id } }", "variables": "{}" }' \
