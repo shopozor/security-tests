@@ -16,7 +16,7 @@ You need to run the python tests in the virtual environment generated like this:
 ```
 virtualenv venv
 . venv/bin/activate
-pip install -r backend/requirements.txt
+pip install -r tests/backend/requirements.txt
 ```
 
 ## Run the backend tests
@@ -24,6 +24,6 @@ pip install -r backend/requirements.txt
 In order to run the tests, you need to do the following:
 ```
 . venv/bin/activate
-cd backend
+cd tests/backend
 pytest --domain http://shopozor-backend.hidora.com --graphql-endpoint graphql/ -ra --junitxml=../reports/backend.xml
 ```
