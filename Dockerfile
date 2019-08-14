@@ -1,7 +1,7 @@
 FROM python:3.7-slim
 
 RUN apt-get -y update \
-  && apt-get install -y jq dos2unix \
+  && apt-get install -y jq dos2unix curl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
