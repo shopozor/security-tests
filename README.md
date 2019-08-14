@@ -21,9 +21,4 @@ pip install -r tests/backend/requirements.txt
 
 ## Run the backend tests
 
-In order to run the tests, you need to do the following:
-```
-. venv/bin/activate
-cd tests/backend
-pytest --domain http://shopozor-backend.hidora.com --graphql-endpoint graphql/ -ra --junitxml=../reports/backend.xml
-```
+See [the pipeline code](tests/Backend.groovy).
