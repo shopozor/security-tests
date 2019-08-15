@@ -21,8 +21,10 @@ def test_security_headers_need_highest_possible_grade(domain):
     assert res.headers['X-Grade'] == 'A+'
 
 
-def test_ssllabs_scan_grade_is_highest(graphql_endpoint):
+def test_ssllabs_scan_grade_is_highest(domain):
     cmd = sh.Command('../../ssllabs-scan')
-    result = cmd('-grade', 'http://www.softozor.ch')
-    # TODO: assert grade is A+
-    # result is --> "http://www.softozor.ch": "A"
+    result = cmd('-grade', '-json-flat', '-verbosity', 'error', domain)
+    allMarks = re.findall('".*"\s*:\s*"(.?.?)"', result.stdout.decode("utf8"))
+    assert len(allMarks) > 0
+    for mark in allMarks:
+      assert mark == 'A+'
