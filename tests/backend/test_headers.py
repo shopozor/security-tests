@@ -22,6 +22,7 @@ def test_security_headers_need_highest_possible_grade(domain):
 
 
 def test_ssllabs_scan_grade_is_highest(graphql_endpoint):
-    cmd = sh.Command('/app/ssllabs-scan')
+    cmd = sh.Command('../../ssllabs-scan')
     result = cmd('-grade', 'http://www.softozor.ch')
+    # TODO: assert grade is A+
     # result is --> "http://www.softozor.ch": "A"

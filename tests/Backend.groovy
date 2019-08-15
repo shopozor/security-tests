@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'softozor/shopozor-security-tests:v0.0.7'
+      image 'softozor/shopozor-security-tests:v0.0.8'
     }
   }
   environment {
