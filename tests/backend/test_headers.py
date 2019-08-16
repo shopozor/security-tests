@@ -23,8 +23,8 @@ def test_security_headers_need_highest_possible_grade(domain):
 
 def test_ssllabs_scan_grade_is_highest(domain):
     cmd = sh.Command('../../ssllabs-scan')
-    result = cmd('-grade', '-json-flat', '-verbosity', 'error', domain)
+    result = cmd('-grade', domain)
     allMarks = re.findall('".*"\s*:\s*"(.?.?)"', result.stdout.decode("utf8"))
     assert len(allMarks) > 0
     for mark in allMarks:
-      assert mark == 'A+'
+        assert mark == 'A+'
