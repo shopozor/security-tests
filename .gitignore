@@ -8,3 +8,6 @@ __pycache__/
 
 # virtual env
 /venv/
+
+# unwanted binaries
+ssllabs-scan
