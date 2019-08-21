@@ -1,5 +1,6 @@
 import pytest
 import requests
+import sh
 
 # the Server header can give away important information to an attacker. other than that it doesn't bring anything useful
 # therefore we should hide it
@@ -19,7 +20,7 @@ def test_ip_resolver_not_returned(graphql_endpoint, query_me):
     with pytest.raises(KeyError):
         res.headers["X-Resolver-IP"]
 
-
+        
 # HTTP Strict Transport Security
 # this protects against protocol downgrade attacks (i.e. if an attacker can somehow make our https website
 # run on the http protocol)
@@ -92,3 +93,18 @@ def test_feature_policy_present(graphql_endpoint, query_me):
 def test_expect_ct_present(graphql_endpoint, query_me):
     res = requests.post(graphql_endpoint, json=query_me)
     ct = res.headers['Expect-CT']
+
+    
+def test_security_headers_need_highest_possible_grade(domain):
+    res = requests.get('https://securityheaders.com/?q=' +
+                       domain + '&followRedirects=on')
+    assert res.headers['X-Grade'] == 'A+'
+
+
+def test_ssllabs_scan_grade_is_highest(domain):
+    cmd = sh.Command('../../ssllabs-scan')
+    result = cmd('-grade', domain)
+    allMarks = re.findall('".*"\s*:\s*"(.?.?)"', result.stdout.decode("utf8"))
+    assert len(allMarks) > 0
+    for mark in allMarks:
+        assert mark == 'A+'
