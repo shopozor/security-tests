@@ -4,8 +4,6 @@ import sh
 
 # the Server header can give away important information to an attacker. other than that it doesn't bring anything useful
 # therefore we should hide it
-
-
 def test_server_header_not_returned(graphql_endpoint, query_me):
     res = requests.post(graphql_endpoint, json=query_me)
     with pytest.raises(KeyError):
