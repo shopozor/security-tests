@@ -11,7 +11,8 @@ WORKDIR /app
 
 RUN curl -s https://api.github.com/repos/ssllabs/ssllabs-scan/releases/latest | grep "browser_download_url.*-linux64.tgz" | cut -d '"' -f 4 | wget -qi - \
   && tar xvfz ssllabs-*.tgz \
-  && rm -f ssllabs-*.tgz*
+  && rm -f ssllabs-*.tgz* \
+  && chmod u+x ssllabs-scan
 
 RUN pip install -r tests/requirements.txt \
     && dos2unix ./scripts/* \
