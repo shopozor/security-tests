@@ -42,9 +42,3 @@ def test_only_post_works(graphql_endpoint):
     #assert res.status_code == 405
     #res = requests.view(graphql_endpoint)
     #assert res.status_code == 405
-
-
-def test_non_existing_endpoint_returns_page_not_found(domain):
-    endpoint = urljoin(domain, 'blabla')
-    res = requests.get(endpoint)
-    assert res.status_code == 404
