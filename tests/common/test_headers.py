@@ -4,30 +4,28 @@ import sh
 
 
 @pytest.helpers.tests.common.headers.register
-def test_server_header_not_returned(response):
+def assert_no_server_header(response):
     """
     The Server header can give away important information to an attacker.
     Other than that it doesn't bring anything useful. Therefore we should hide it.  
     """
 
-    with pytest.raises(KeyError):
-        response.headers["Server"]
+    assert 'Server' not in response.headers
 
 
 @pytest.helpers.tests.common.headers.register
-def test_ip_resolver_not_returned(response):
+def assert_no_x_resolver_ip_header(response):
     """
     This remains to be verified but I believe the X-Resolver-IP header is nginx-specific and also doesn't do anything useful.
     This last fact needs to be verified. If that is the case though then we must make sure we are hiding it, because it gives
     away the fact that we are using nginx.
     """
 
-    with pytest.raises(KeyError):
-        response.headers["X-Resolver-IP"]
+    assert 'X-Resolver-IP' not in response.headers
 
 
 @pytest.helpers.tests.common.headers.register
-def test_hsts_present(response):
+def assert_hsts_present(response):
     """
     HTTP Strict Transport Security
     This protects against protocol downgrade attacks (i.e. if an attacker can somehow make our https website
@@ -40,7 +38,7 @@ def test_hsts_present(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_csp_present(response):
+def assert_csp_present(response):
     """
     CSP is one of the most modern security headers. it allows blocking a lot of unwanted things, it must be present
     and configured.
@@ -54,7 +52,7 @@ def test_csp_present(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_click_jacking_protection(response):
+def assert_click_jacking_protection(response):
     """
     Test click jacking protection. This effectively prevents other pages from rendering our website through the use of frame, iframes and object
     technically the XFO option is a bit older, the CSP version is more modern and allows setting up of the domains that might be allowed to render
@@ -71,7 +69,7 @@ def test_click_jacking_protection(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_XSS_protection_present(response):
+def assert_XSS_protection_present(response):
     """
     Technically this one isn't needed if we have csp, csp with unsafe-inline protection already covers
     the problems solved by the X-XSS-Protection header, but it doesn't hurt to have it as well
@@ -81,7 +79,7 @@ def test_XSS_protection_present(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_content_type_options_present(response):
+def assert_content_type_options_present(response):
     """
     Avoid MIME Sniffing Vulnerabilities
     MIME sniffing vulnerabilities can occur when a website allows users to upload data to the server.
@@ -94,7 +92,7 @@ def test_content_type_options_present(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_referrer_policy_present(response):
+def assert_referrer_policy_present(response):
     """
     Unsafe things can happen with the referrer header, and this policy
     makes sure we never receive a downgraded (i.e. http) link
@@ -104,7 +102,7 @@ def test_referrer_policy_present(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_feature_policy_present(response):
+def assert_feature_policy_present(response):
     """ 
     Feature Policy will allow a site to enable or disable certain browser features and APIs in the
     interest of better security and privacy
@@ -114,7 +112,7 @@ def test_feature_policy_present(response):
 
 
 @pytest.helpers.tests.common.headers.register
-def test_expect_ct_present(response):
+def assert_expect_ct_present(response):
     """
     Certificate Transparency
     """

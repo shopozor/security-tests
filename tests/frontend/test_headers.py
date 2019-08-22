@@ -10,7 +10,7 @@ def test_server_header_not_returned(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_server_header_not_returned(res)
+    pytest.helpers.tests.common.headers.assert_no_server_header(res)
 
 
 def test_ip_resolver_not_returned(domain):
@@ -21,7 +21,7 @@ def test_ip_resolver_not_returned(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_ip_resolver_not_returned(res)
+    pytest.helpers.tests.common.headers.assert_no_x_resolver_ip_header(res)
 
 
 def test_hsts_present(domain):
@@ -32,7 +32,7 @@ def test_hsts_present(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_hsts_present(res)
+    pytest.helpers.tests.common.headers.assert_hsts_present(res)
 
 
 def test_csp_present(domain):
@@ -42,7 +42,7 @@ def test_csp_present(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_csp_present(res)
+    pytest.helpers.tests.common.headers.assert_csp_present(res)
 
 
 def test_click_jacking_protection(domain):
@@ -53,7 +53,7 @@ def test_click_jacking_protection(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_click_jacking_protection(res)
+    pytest.helpers.tests.common.headers.assert_click_jacking_protection(res)
 
 
 def test_XSS_protection_present(domain):
@@ -63,7 +63,7 @@ def test_XSS_protection_present(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_XSS_protection_present(res)
+    pytest.helpers.tests.common.headers.assert_XSS_protection_present(res)
 
 
 def test_content_type_options_present(domain):
@@ -76,7 +76,8 @@ def test_content_type_options_present(domain):
     an HTML file therefore providing the attacker with the possibility to execute XSS.
     """
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_content_type_options_present(res)
+    pytest.helpers.tests.common.headers.assert_content_type_options_present(
+        res)
 
 
 def test_referrer_policy_present(domain):
@@ -86,7 +87,7 @@ def test_referrer_policy_present(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_referrer_policy_present(res)
+    pytest.helpers.tests.common.headers.assert_referrer_policy_present(res)
 
 
 def test_feature_policy_present(domain):
@@ -96,7 +97,7 @@ def test_feature_policy_present(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_feature_policy_present(res)
+    pytest.helpers.tests.common.headers.assert_feature_policy_present(res)
 
 
 def test_expect_ct_present(domain):
@@ -105,4 +106,4 @@ def test_expect_ct_present(domain):
     """
 
     res = request.get(domain)
-    pytest.helpers.tests.common.headers.test_expect_ct_present(res)
+    pytest.helpers.tests.common.headers.assert_expect_ct_present(res)
