@@ -1,7 +1,5 @@
-import pytest
+from utils.header_assertions import *
 import requests
-import sh
-import test_headers
 
 
 def test_server_header_not_returned(graphql_endpoint, query_me):
@@ -11,7 +9,7 @@ def test_server_header_not_returned(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_no_server_header(res)
+    assert_no_server_header(res)
 
 
 def test_ip_resolver_not_returned(graphql_endpoint, query_me):
@@ -22,7 +20,7 @@ def test_ip_resolver_not_returned(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_no_x_resolver_ip_header(res)
+    assert_no_x_resolver_ip_header(res)
 
 
 def test_hsts_present(graphql_endpoint, query_me):
@@ -33,7 +31,7 @@ def test_hsts_present(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_hsts_present(res)
+    assert_hsts_present(res)
 
 
 def test_csp_present(graphql_endpoint, query_me):
@@ -43,7 +41,7 @@ def test_csp_present(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_csp_present(res)
+    assert_csp_present(res)
 
 
 def test_click_jacking_protection(graphql_endpoint, query_me):
@@ -54,7 +52,7 @@ def test_click_jacking_protection(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_click_jacking_protection(res)
+    assert_click_jacking_protection(res)
 
 
 def test_XSS_protection_present(graphql_endpoint, query_me):
@@ -64,7 +62,7 @@ def test_XSS_protection_present(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_XSS_protection_present(res)
+    assert_XSS_protection_present(res)
 
 
 def test_content_type_options_present(graphql_endpoint, query_me):
@@ -77,8 +75,7 @@ def test_content_type_options_present(graphql_endpoint, query_me):
     an HTML file therefore providing the attacker with the possibility to execute XSS.
     """
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_content_type_options_present(
-        res)
+    assert_content_type_options_present(res)
 
 
 def test_referrer_policy_present(graphql_endpoint, query_me):
@@ -88,7 +85,7 @@ def test_referrer_policy_present(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_referrer_policy_present(res)
+    assert_referrer_policy_present(res)
 
 
 def test_feature_policy_present(graphql_endpoint, query_me):
@@ -98,7 +95,7 @@ def test_feature_policy_present(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_feature_policy_present(res)
+    assert_feature_policy_present(res)
 
 
 def test_expect_ct_present(graphql_endpoint, query_me):
@@ -107,4 +104,4 @@ def test_expect_ct_present(graphql_endpoint, query_me):
     """
 
     res = requests.post(graphql_endpoint, json=query_me)
-    test_headers.assert_expect_ct_present(res)
+    assert_expect_ct_present(res)

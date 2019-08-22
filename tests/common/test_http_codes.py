@@ -13,5 +13,6 @@ def test_https_redirect(domain):
     """
     Tests that http is redirected to https
     """
-   res = requests.get(domain, allow_redirects=False)
-   assert res.status_code == 301
+
+    res = requests.get(domain, allow_redirects=False)
+    assert res.status_code == 301
