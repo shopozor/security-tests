@@ -9,5 +9,8 @@ __pycache__/
 # virtual env
 /venv/
 
+# VS code
+/.vscode/
+
 # unwanted binaries
 ssllabs-scan
