@@ -5,15 +5,16 @@ RUN apt-get -y update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-COPY . /app
+COPY tests/requirements.txt /tmp
 
-WORKDIR /app
+WORKDIR /tmp
 
 RUN curl -s https://api.github.com/repos/ssllabs/ssllabs-scan/releases/latest | grep "browser_download_url.*-linux64.tgz" | cut -d '"' -f 4 | wget -qi - \
   && tar xvfz ssllabs-*.tgz \
   && rm -f ssllabs-*.tgz* \
-  && chmod u+x ssllabs-scan
+  && mv ssllabs-scan /usr/local/bin
 
-RUN pip install -r tests/requirements.txt \
-    && dos2unix ./scripts/* \
-    && chmod u+x ./scripts/*.sh
+RUN pip install -r requirements.txt \
+  && rm requirements.txt
+
+WORKDIR /home

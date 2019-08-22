@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'softozor/shopozor-security-tests:v0.0.9'
+      image 'softozor/shopozor-security-tests:v0.0.10'
     }
   }
   environment {
@@ -12,7 +12,8 @@ pipeline {
     stage('Wake up Jelastic environment') {
         steps {
             script {
-                SCRIPT_TO_RUN = '/app/scripts/wake-up-env.sh'
+                SCRIPT_TO_RUN = './scripts/wake-up-env.sh'
+                sh "chmod u+x $SCRIPT_TO_RUN"
                 sh "$SCRIPT_TO_RUN $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $HIDORA_DOMAIN"
             }
         }
