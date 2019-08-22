@@ -18,6 +18,9 @@ pipeline {
         }
     }
     stage('Security Tests') {
+        environment {
+          PYTHONPATH = "$PYTHONPATH:$WORKSPACE/tests/common"
+        }    
         steps {
             withEnv(["HOME=$WORKSPACE"]) {
                 sh "cd tests/backend && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
@@ -33,3 +36,6 @@ pipeline {
     }
   }
 }
+
+
+
