@@ -17,7 +17,7 @@ pipeline {
             }
         }
     }
-    stage('Security Tests') {
+    stage('Backend Security Tests') {
         // environment {
         //   PYTHONPATH = "$PYTHONPATH:$WORKSPACE/tests/common"
         // }    
