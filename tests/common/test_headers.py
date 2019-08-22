@@ -18,7 +18,7 @@ def test_ssllabs_scan_grade_is_highest(domain):
     Assess the security of our website according to https://ssllabs.com/ssltest/
     """
 
-    cmd = sh.Command('../../ssllabs-scan')
+    cmd = sh.Command('ssllabs-scan')
     result = cmd('-grade', domain)
     allMarks = re.findall('".*"\s*:\s*"(.?.?)"', result.stdout.decode("utf8"))
     assert len(allMarks) > 0
