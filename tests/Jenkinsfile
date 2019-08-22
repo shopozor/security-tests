@@ -17,13 +17,17 @@ pipeline {
             }
         }
     }
-    stage('Backend Security Tests') {
-        // environment {
-        //   PYTHONPATH = "$PYTHONPATH:$WORKSPACE/tests/common"
-        // }    
+    stage('Common Security Tests') {
         steps {
             withEnv(["HOME=$WORKSPACE"]) {
-                sh "cd tests/backend && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=backend-tests.xml"
+                sh "cd tests/common && pytest --domain http://${HIDORA_DOMAIN}.hidora.com -ra --junitxml=common-test-report.xml"
+            }
+        }
+    }
+    stage('Specific Security Tests') {
+        steps {
+            withEnv(["HOME=$WORKSPACE"]) {
+                sh "cd tests/${APPLICATION_TYPE} && pytest --domain http://${HIDORA_DOMAIN}.hidora.com --graphql-endpoint graphql/ -ra --junitxml=specific-test-report.xml"
             }
         }
     }
