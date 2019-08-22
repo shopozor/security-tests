@@ -2,6 +2,8 @@ import pytest
 import requests
 import sh
 
+pytest_plugins = ['helpers_namespace']
+
 
 @pytest.helpers.tests.common.headers.register
 def assert_no_server_header(response):
