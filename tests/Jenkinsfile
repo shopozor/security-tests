@@ -20,9 +20,10 @@ pipeline {
     stage('Common Security Tests') {
         steps {
             withEnv(["HOME=$WORKSPACE"]) {
-              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+              // catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh "ls"
                 sh "cd tests/common && pytest --domain http://${HIDORA_DOMAIN}.hidora.com -ra --junitxml=common-test-report.xml"
-              }
+              // }
             }
         }
     }
