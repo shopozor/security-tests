@@ -25,4 +25,3 @@ urllib3==1.25.3
 wcwidth==0.1.7
 wrapt==1.11.2
 zipp==0.5.2
-pytest-helpers-namespace==2019.1.8

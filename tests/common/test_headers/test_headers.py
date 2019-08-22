@@ -2,10 +2,7 @@ import pytest
 import requests
 import sh
 
-pytest_plugins = ['helpers_namespace']
 
-
-@pytest.helpers.tests.common.headers.register
 def assert_no_server_header(response):
     """
     The Server header can give away important information to an attacker.
@@ -15,7 +12,6 @@ def assert_no_server_header(response):
     assert 'Server' not in response.headers
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_no_x_resolver_ip_header(response):
     """
     This remains to be verified but I believe the X-Resolver-IP header is nginx-specific and also doesn't do anything useful.
@@ -26,7 +22,6 @@ def assert_no_x_resolver_ip_header(response):
     assert 'X-Resolver-IP' not in response.headers
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_hsts_present(response):
     """
     HTTP Strict Transport Security
@@ -39,7 +34,6 @@ def assert_hsts_present(response):
     assert 'includeSubDomains' in hsts
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_csp_present(response):
     """
     CSP is one of the most modern security headers. it allows blocking a lot of unwanted things, it must be present
@@ -53,7 +47,6 @@ def assert_csp_present(response):
     assert csp.find("frame-ancestors 'none'") >= 0
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_click_jacking_protection(response):
     """
     Test click jacking protection. This effectively prevents other pages from rendering our website through the use of frame, iframes and object
@@ -70,7 +63,6 @@ def assert_click_jacking_protection(response):
         assert response.headers['X-Frame-Options'] == "DENY"
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_XSS_protection_present(response):
     """
     Technically this one isn't needed if we have csp, csp with unsafe-inline protection already covers
@@ -80,7 +72,6 @@ def assert_XSS_protection_present(response):
     assert response.headers['X-XSS-Protection'].startswith('1; mode=block')
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_content_type_options_present(response):
     """
     Avoid MIME Sniffing Vulnerabilities
@@ -93,7 +84,6 @@ def assert_content_type_options_present(response):
     assert response.headers['X-Content-Type-Options'] == 'nosniff'
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_referrer_policy_present(response):
     """
     Unsafe things can happen with the referrer header, and this policy
@@ -103,7 +93,6 @@ def assert_referrer_policy_present(response):
     assert response.headers['Referrer-Policy'] == 'strict-origin-when-cross-origin'
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_feature_policy_present(response):
     """ 
     Feature Policy will allow a site to enable or disable certain browser features and APIs in the
@@ -113,7 +102,6 @@ def assert_feature_policy_present(response):
     assert 'Feature-Policy' in response.headers
 
 
-@pytest.helpers.tests.common.headers.register
 def assert_expect_ct_present(response):
     """
     Certificate Transparency
